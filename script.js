@@ -55,20 +55,56 @@ function bold(){
 
 function emphasis(){
   var $textarea = $("textarea");
+  var textArea = document.getElementById('textarea');
+  var end,start,value,firstHalf,secondHalf;
   if(!$textarea.val()){
-    $textarea.val($textarea.val()+'__')
+    $textarea.val($textarea.val()+'__');
+    $textarea.focus();
+    end = textArea.selectionStart;
+    start = end-1;
+    textArea.setSelectionRange(start,end);
+    window.getSelection().collapseToStart();
   } else {
-    $textarea.val($textarea.val()+' __')
-  }
+    $textarea.focus();
+    end = textArea.selectionStart;
+    value = textArea.value;
+    firstHalf = textArea.value.substring(0,end);
+    secondHalf = textArea.value.substring(end,value.length);
+    textArea.value = firstHalf+'__'+secondHalf;
+    textArea.focus();
+    end = firstHalf.length+2;
+    start = firstHalf.length+1;
+    textArea.setSelectionRange(start,end);
+    window.getSelection().collapseToStart();
+    }
+  textArea.focus();
 }
 
 function strikethrough(){
   var $textarea = $("textarea");
+  var textArea = document.getElementById('textarea');
+  var end,start,value,firstHalf,secondHalf;
   if(!$textarea.val()){
-    $textarea.val($textarea.val()+'~~')
+    $textarea.val($textarea.val()+'~~');
+    $textarea.focus();
+    end = textArea.selectionStart;
+    start = end-1;
+    textArea.setSelectionRange(start,end);
+    window.getSelection().collapseToStart();
   } else {
-    $textarea.val($textarea.val()+' ~~')
-  }
+    $textarea.focus();
+    end = textArea.selectionStart;
+    value = textArea.value;
+    firstHalf = textArea.value.substring(0,end);
+    secondHalf = textArea.value.substring(end,value.length);
+    textArea.value = firstHalf+'~~'+secondHalf;
+    textArea.focus();
+    end = firstHalf.length+2;
+    start = firstHalf.length+1;
+    textArea.setSelectionRange(start,end);
+    window.getSelection().collapseToStart();
+    }
+  textArea.focus();
 }
 
 function table(){
@@ -86,48 +122,55 @@ function link(){
 
 function header(size){
   var $textarea = $("textarea")
-  if(size === 'h1'){
+  switch (size) {
+    case 'h1':
     if(!$textarea.val()){
       $textarea.val('# ')
     }
     else {
       $textarea.val($textarea.val()+'\n# ')
     }
-  } else if (size === 'h2') {
+      break;
+    case 'h2':
     if(!$textarea.val()){
       $textarea.val('## ')
     }
     else {
       $textarea.val($textarea.val()+'\n## ')
     }
-  } else if (size === 'h3') {
+      break;
+    case 'h3':
     if(!$textarea.val()){
       $textarea.val('### ')
     }
     else {
       $textarea.val($textarea.val()+'\n### ')
     }
-  } else if (size === 'h4') {
+      break;
+    case 'h4':
     if(!$textarea.val()){
       $textarea.val('#### ')
     }
     else {
       $textarea.val($textarea.val()+'\n#### ')
     }
-  } else if (size === 'h5') {
+      break;
+    case 'h5':
     if(!$textarea.val()){
       $textarea.val('##### ')
     }
     else {
       $textarea.val($textarea.val()+'\n##### ')
     }
-  } else{
+      break;
+    case 'h6':
     if(!$textarea.val()){
       $textarea.val('###### ')
     }
     else {
       $textarea.val($textarea.val()+'\n###### ')
     }
+      break;
   }
   $textarea.focus();
 }
