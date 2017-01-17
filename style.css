@@ -1,0 +1,30 @@
+.edit{
+  margin-top: 2%;
+  margin-left: 1%;
+}
+.lower{
+  float: right;
+  margin: 1%;
+}
+
+.icons{
+  display: inline;
+  margin-right: 2px;
+}
+body{
+  margin-top: 1%;
+}
+.left-panel{
+  width: 48%;
+  height: 100%;
+  border:1.5px solid black;
+}
+button{
+  margin-right: -4px;
+}
+*{
+  border-radius: 0px !important;
+}
+textarea{
+  font-size: xx-large;
+}
