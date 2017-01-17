@@ -16,22 +16,41 @@ $(document).ready(function(){
   $("#quoteR").on('click',quoteR);
   $("#fileImage").on('click',fileImage);
   $("#video").on('click',video);
-  $("ul li:nth-child(1)").on('click',h1);
-  $("ul li:nth-child(2)").on('click',header('h2'));
-  $("ul li:nth-child(3)").on('click',header('h3'));
-  $("ul li:nth-child(4)").on('click',header('h4'));
-  $("ul li:nth-child(5)").on('click',header('h5'));
-  $("ul li:nth-child(6)").on('click',header('h6'));
+  $("ul li:nth-child(1)").on('click',function(){header('h1');});
+  $("ul li:nth-child(2)").on('click',function(){header('h2');});
+  $("ul li:nth-child(3)").on('click',function(){header('h3');});
+  $("ul li:nth-child(4)").on('click',function(){header('h4');});
+  $("ul li:nth-child(5)").on('click',function(){header('h5');});
+  $("ul li:nth-child(6)").on('click',function(){header('h6');});
 });
+
+
 
 function bold(){
   var $textarea = $("textarea");
+  var textArea = document.getElementById('textarea');
+  var end,start,value,firstHalf,secondHalf;
   if(!$textarea.val()){
-    $textarea.val($textarea.val()+'****')
+    $textarea.val($textarea.val()+'****');
+    $textarea.focus();
+    end = textArea.selectionStart;
+    start = end-2;
+    textArea.setSelectionRange(start,end);
+    window.getSelection().collapseToStart();
   } else {
-    $textarea.val($textarea.val()+' ****')
-  }
-  $textarea.focus();
+    $textarea.focus();
+    end = textArea.selectionStart;
+    value = textArea.value;
+    firstHalf = textArea.value.substring(0,end);
+    secondHalf = textArea.value.substring(end,value.length);
+    textArea.value = firstHalf+'****'+secondHalf;
+    textArea.focus();
+    end = firstHalf.length+4;
+    start = firstHalf.length+2;
+    textArea.setSelectionRange(start,end);
+    window.getSelection().collapseToStart();
+    }
+  textArea.focus();
 }
 
 function emphasis(){
@@ -64,13 +83,51 @@ function link(){
     $textarea.val($textarea.val()+' [text_here](link_here)')
   }
 }
-function h1(){
+
+function header(size){
   var $textarea = $("textarea")
-  if(!$textarea.val()){
-    $textarea.val('# ')
-  }
-  else {
-    $textarea.val($textarea.val()+'\n# ')
+  if(size === 'h1'){
+    if(!$textarea.val()){
+      $textarea.val('# ')
+    }
+    else {
+      $textarea.val($textarea.val()+'\n# ')
+    }
+  } else if (size === 'h2') {
+    if(!$textarea.val()){
+      $textarea.val('## ')
+    }
+    else {
+      $textarea.val($textarea.val()+'\n## ')
+    }
+  } else if (size === 'h3') {
+    if(!$textarea.val()){
+      $textarea.val('### ')
+    }
+    else {
+      $textarea.val($textarea.val()+'\n### ')
+    }
+  } else if (size === 'h4') {
+    if(!$textarea.val()){
+      $textarea.val('#### ')
+    }
+    else {
+      $textarea.val($textarea.val()+'\n#### ')
+    }
+  } else if (size === 'h5') {
+    if(!$textarea.val()){
+      $textarea.val('##### ')
+    }
+    else {
+      $textarea.val($textarea.val()+'\n##### ')
+    }
+  } else{
+    if(!$textarea.val()){
+      $textarea.val('###### ')
+    }
+    else {
+      $textarea.val($textarea.val()+'\n###### ')
+    }
   }
   $textarea.focus();
 }
