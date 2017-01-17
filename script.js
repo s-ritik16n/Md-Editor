@@ -1,27 +1,28 @@
 $(document).ready(function(){
   console.log("ready");
-  start();
+//  start();
+  $("#bold").on('click',bold);
+  $("#emphasis").on('click',emphasis);
+  $("#strikethrough").on('click',strikethrough);
+  $("#table").on('click',table);
+  $("#link").on('click',link);
+  $("#listol").on('click',listol);
+  $("#listul").on('click',listul);
+  $("#fileCode").on('click',fileCode);
+  $("#code").on('click',code);
+  $("#minus").on('click',minus);
+  $("#paragraph").on('click',paragraph);
+  $("#quoteL").on('click',quoteL);
+  $("#quoteR").on('click',quoteR);
+  $("#fileImage").on('click',fileImage);
+  $("#video").on('click',video);
+  $("ul li:nth-child(1)").on('click',h1);
+  $("ul li:nth-child(2)").on('click',header('h2'));
+  $("ul li:nth-child(3)").on('click',header('h3'));
+  $("ul li:nth-child(4)").on('click',header('h4'));
+  $("ul li:nth-child(5)").on('click',header('h5'));
+  $("ul li:nth-child(6)").on('click',header('h6'));
 });
-
-function start(){
-  $(".fa-bold").on('click',bold);
-  $(".fa-italic").on('click',func('italic'));
-  $(".fa-strikethrough").on('click',func('strikethrough'));
-  $(".fa-table").on('click',func('table'));
-  $(".fa-link").on('click',func('link'));
-  $(".fa-header").on('click',func('header'));
-  $(".fa-list-ol").on('click',func('listol)'));
-  $(".fa-list-ul").on('click',func('listul'));
-  $(".fa-file-code-o").on('click',func('fileCode'));
-  $(".fa-code").on('click',func('code'));
-  $(".fa-minus").on('click',func('minus'));
-  $(".fa-paragraph").on('click',func('paragraph'));
-  $(".fa-quote-left").on('click',func('quoteL'));
-  $(".fa-quote-right").on('click',func('quoteR'));
-  $(".fa-file-image-o").on('click',func('fileImage'));
-  $(".fa-youtube-play").on('click',func('video'));
-
-}
 
 function bold(){
   var $textarea = $("textarea");
@@ -30,72 +31,96 @@ function bold(){
   } else {
     $textarea.val($textarea.val()+' ****')
   }
+  $textarea.focus();
 }
 
-function func(){
+function emphasis(){
+  var $textarea = $("textarea");
+  if(!$textarea.val()){
+    $textarea.val($textarea.val()+'__')
+  } else {
+    $textarea.val($textarea.val()+' __')
+  }
+}
+
+function strikethrough(){
+  var $textarea = $("textarea");
+  if(!$textarea.val()){
+    $textarea.val($textarea.val()+'~~')
+  } else {
+    $textarea.val($textarea.val()+' ~~')
+  }
+}
+
+function table(){
 
 }
-/*
-function func(pressed){
-  switch (pressed) {
-    case '"bold"':
-    console.log("clicking bold");
 
-    $textarea.val($textarea.val()+'****')
-
-      break;
-    case 'italic':
-    console.log("clicking bold");
-    $textarea.val($textarea.val()+'****')
-    break;
-    case 'strikethrough':
-    console.log("clicking bold");
-    $textarea.val($textarea.val()+'****')
-      break;
-    case 'table':
-    console.log("clicking bold");
-    $textarea.val($textarea.val()+'****')
-      break;
-    case 'link':
-    console.log("clicking bold");
-    $textarea.val($textarea.val()+'****')
-      break;
-    case 'header':
-
-      break;
-    case 'listol':
-
-      break;
-    case 'listul':
-
-      break;
-    case 'fileCode':
-
-      break;
-    case 'code':
-
-      break;
-    case 'minus':
-
-      break;
-    case 'paragraph':
-
-      break;
-    case 'quoteL':
-
-      break;
-    case 'quoteR':
-
-      break;
-    case 'fileImage':
-
-      break;
-    case 'video':
-
-      break;
-    default:
-
+function link(){
+  var $textarea = $("textarea");
+  if(!$textarea.val()){
+    $textarea.val($textarea.val()+'[text_here](link_here)')
+  } else {
+    $textarea.val($textarea.val()+' [text_here](link_here)')
+  }
+}
+function h1(){
+  var $textarea = $("textarea")
+  if(!$textarea.val()){
+    $textarea.val('# ')
+  }
+  else {
+    $textarea.val($textarea.val()+'\n# ')
   }
   $textarea.focus();
 }
-*/
+
+function listol(){
+
+}
+
+function listul(){
+
+}
+
+function fileCode(){
+
+}
+
+function code(){
+  var $textarea = $("textarea");
+  if(!$textarea.val()){
+    $textarea.val($textarea.val()+'``')
+  } else {
+    $textarea.val($textarea.val()+' ``')
+  }
+}
+
+function minus(){
+
+}
+
+function paragraph(){
+
+}
+
+function quoteL(){
+
+}
+
+function quoteR(){
+
+}
+
+function fileImage(){
+  var $textarea = $("textarea");
+  if(!$textarea.val()){
+    $textarea.val($textarea.val()+'[alt text](link "tooltip")')
+  } else {
+    $textarea.val($textarea.val()+' [alt text](link "tooltip")')
+  }
+}
+
+function video() {
+
+}
