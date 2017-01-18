@@ -22,34 +22,38 @@ $(document).ready(function(){
   $("ul li:nth-child(4)").on('click',function(){header('h4');});
   $("ul li:nth-child(5)").on('click',function(){header('h5');});
   $("ul li:nth-child(6)").on('click',function(){header('h6');});
+  $("#refresh").on('click',function(){
+    $("textarea").val("");
+  })
 });
 
-
+var textArea = document.getElementById("textarea");
+var $textarea = $("textarea");
 
 function bold(){
   var $textarea = $("textarea");
   var textArea = document.getElementById('textarea');
   var end,start,value,firstHalf,secondHalf;
-  if(!$textarea.val()){
+  /*if(!$textarea.val()){
     $textarea.val($textarea.val()+'****');
     $textarea.focus();
     end = textArea.selectionStart;
     start = end-2;
     textArea.setSelectionRange(start,end);
     window.getSelection().collapseToStart();
-  } else {
+  } else {*/
     $textarea.focus();
     end = textArea.selectionStart;
     value = textArea.value;
     firstHalf = textArea.value.substring(0,end);
     secondHalf = textArea.value.substring(end,value.length);
-    textArea.value = firstHalf+'****'+secondHalf;
+    textArea.value = firstHalf+'**<strong text>**'+secondHalf;
     textArea.focus();
-    end = firstHalf.length+4;
+    end = firstHalf.length+15;
     start = firstHalf.length+2;
     textArea.setSelectionRange(start,end);
-    window.getSelection().collapseToStart();
-    }
+  //  window.getSelection().collapseToStart();
+    //}
   textArea.focus();
 }
 
@@ -57,26 +61,26 @@ function emphasis(){
   var $textarea = $("textarea");
   var textArea = document.getElementById('textarea');
   var end,start,value,firstHalf,secondHalf;
-  if(!$textarea.val()){
-    $textarea.val($textarea.val()+'__');
+  /*if(!$textarea.val()){
+    $textarea.val($textarea.val()+'_<Emphasized text>_');
     $textarea.focus();
     end = textArea.selectionStart;
     start = end-1;
     textArea.setSelectionRange(start,end);
     window.getSelection().collapseToStart();
-  } else {
+  } else {*/
     $textarea.focus();
     end = textArea.selectionStart;
     value = textArea.value;
     firstHalf = textArea.value.substring(0,end);
     secondHalf = textArea.value.substring(end,value.length);
-    textArea.value = firstHalf+'__'+secondHalf;
+    textArea.value = firstHalf+'_<Emphasized text>_'+secondHalf;
     textArea.focus();
-    end = firstHalf.length+2;
+    end = firstHalf.length+18;
     start = firstHalf.length+1;
     textArea.setSelectionRange(start,end);
-    window.getSelection().collapseToStart();
-    }
+    //window.getSelection().collapseToStart();
+    //}
   textArea.focus();
 }
 
@@ -113,10 +117,23 @@ function table(){
 
 function link(){
   var $textarea = $("textarea");
+  var textArea = document.getElementById('textarea');
+  var end,start,firstHalf,secondHalf;
   if(!$textarea.val()){
-    $textarea.val($textarea.val()+'[text_here](link_here)')
+    $textarea.val($textarea.val()+'[<text_here>](<link_here>)')
+    $textarea.focus();
+    end = 12;
+    start = 1;
+    textArea.setSelectionRange(start,end);
   } else {
-    $textarea.val($textarea.val()+' [text_here](link_here)')
+    end = textArea.selectionStart;
+    firstHalf = textArea.value.substring(0,end);
+    secondHalf = textArea.value.substring(end,textArea.value.length);
+    textArea.value = firstHalf + '[<text_here>](<link_here>)' + secondHalf;
+    $textarea.focus();
+    end = firstHalf.length + 12;
+    start = firstHalf.length + 1;
+    textArea.setSelectionRange(start,end);
   }
 }
 
@@ -188,11 +205,19 @@ function fileCode(){
 }
 
 function code(){
-  var $textarea = $("textarea");
+  var $textarea = $("textarea")
+  var textArea = document.getElementById('textarea')
+  var end,start;
+  console.log(textArea);
   if(!$textarea.val()){
-    $textarea.val($textarea.val()+'``')
+    $textarea.val($textarea.val()+'`<code>`')
+    $textarea.focus();
+    textArea.setSelectionRange(1,7);
   } else {
-    $textarea.val($textarea.val()+' ``')
+    var end = textArea.selectionStart;
+
+    $textarea.val($textarea.val()+'`<code>`');
+
   }
 }
 
@@ -215,9 +240,9 @@ function quoteR(){
 function fileImage(){
   var $textarea = $("textarea");
   if(!$textarea.val()){
-    $textarea.val($textarea.val()+'[alt text](link "tooltip")')
+    $textarea.val($textarea.val()+'[<alt_text>](<link> "<tooltip>")')
   } else {
-    $textarea.val($textarea.val()+' [alt text](link "tooltip")')
+    $textarea.val($textarea.val()+' [<alt_text>](<link> "<tooltip>")')
   }
 }
 
