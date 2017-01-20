@@ -1,79 +1,90 @@
 <!doctype html>
 <html>
 <head>
-  <title></title>
+  <title>&lt;/&gt; Md-Editor</title>
   <script src="https://use.fontawesome.com/b61e6066ca.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
   <script src="script.js"></script>
   <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 </head>
 <body class="container-fluid">
-  <div class="left-panel">
-    <div class="buttons">
-      <div class="icons" id="panel1">
-        <button class="btn" id="bold" data-toggle="tooltip" title="Strong text"><i class="fa fa-bold" aria-hidden="true" id="bold"></i></button>
-        <button class="btn" id="emphasis" data-toggle="tooltip" title="Emphasis"><i class="fa fa-italic" aria-hidden="true"></i></button>
-        <button class="btn" id="strikethrough" data-toggle="tooltip" title="Strikethrough"><i class="fa fa-strikethrough" aria-hidden="true"></i></button>
-      </div>
-      <div class="icons" id="panel7">
-        <button class="btn" id="table" data-toggle="tooltip" title="Table"><i class="fa fa-table" aria-hidden="true"></i></button>
-        <button class="btn" id="link" data-toggle="tooltip" title="Link"><i class="fa fa-link" aria-hidden="true"></i></button>
-        <div class="dropdown" style="display:inline;">
-        <button class="btn dropdown-toggle" data-toggle="dropdown tooltip" title="Header"><i class="fa fa-header" aria-hidden="true"></i>  <span class="caret"></span></button>
-        <ul class="dropdown-menu">
-          <li>
-            <a href="#"><h1>H1</h1></a>
-          </li>
-          <li>
-            <a href="#"><h2>H2</h2></a>
-          </li>
-          <li>
-            <a href="#"><h3>H3</h3></a>
-          </li>
-          <li>
-            <a href="#"><h4>H4</h4></a>
-          </li>
-          <li>
-            <a href="#"><h5>H5</h5></a>
-          </li>
-          <li>
-            <a href="#"><h6>H6</h6></a>
-          </li>
-        </ul>
-      </div>
-      </div>
-      <div class="icons" id="panel2">
-        <button class="btn" id="listol" data-toggle="tooltip" title="Ordered list"><i class="fa fa-list-ol" aria-hidden="true"></i></button>
-        <button class="btn" id="listul" data-toggle="tooltip" title="Unordered list"><i class="fa fa-list-ul" aria-hidden="true"></i></button>
-      </div>
-      <div class="icons" id="panel3">
-        <button class="btn" id="fileCode" data-toggle="tooltip" title="Code block"><i class="fa fa-file-code-o" aria-hidden="true"></i></button>
-        <button class="btn" id="code" data-toggle="tooltip" title="Code"><i class="fa fa-code" aria-hidden="true"></i></button>
-      </div>
-      <div class="icons" id="panel4">
-        <button class="btn" id="minus" data-toggle="tooltip" title="Horizontal Rule"><i class="fa fa-minus" aria-hidden="true"></i></button>
-        <button class="btn" id="paragraph" data-toggle="tooltip" title="Paragraph"><i class="fa fa-paragraph" aria-hidden="true"></i></button>
-      </div>
-      <div class="icons" id="panel5">
-        <button class="btn" id="quoteL" data-toggle="tooltip" title="Blockquote"><i class="fa fa-quote-left" aria-hidden="true"></i></button>
-        <button class="btn" id="quoteR" data-toggle="tooltip" title="End blockquote"><i class="fa fa-quote-right" aria-hidden="true"></i></button>
-      </div>
-      <div class="icons" id="panel6">
-        <button class="btn" id="fileImage" data-toggle="tooltip" title="Image"><i class="fa fa-file-image-o" aria-hidden="true"></i></button>
-        <button class="btn" id="video" data-toggle="tooltip" title="Video"><i class="fa fa-youtube-play" aria-hidden="true"></i></button>
-      </div>
-      <button class="btn btn-success" id="refresh" data-toggle="tooltip" title="Reset"><i class="fa fa-refresh"></i></button>
-      </div>
-    <div class="textarea">
-      <textarea id="textarea" class="form-control" rows="20" autofocus style="font-size:large"></textarea>
-    </div>
-    <div class="lower">
-      <button class="btn btn-success" type="button" data-toggle="tooltip" title="Copy"><i class="fa fa-copy"> Copy</i></button>
-    </div>
-  </div>
-  <div class="right-panel">
-  </div>
+  <nav class="navbar">
+    <ul>
+      
+    </ul>
+  </nav>
+  <section>
+    <article class="left-panel">
+     <div class="buttons">
+       <div class="icons" id="panel1">
+         <button class="btn" id="bold" data-toggle="tooltip" title="Strong text"><i class="fa fa-bold" aria-hidden="true" id="bold"></i></button>
+         <button class="btn" id="emphasis" data-toggle="tooltip" title="Emphasis"><i class="fa fa-italic" aria-hidden="true"></i></button>
+         <button class="btn" id="strikethrough" data-toggle="tooltip" title="Strikethrough"><i class="fa fa-strikethrough" aria-hidden="true"></i></button>
+       </div>
+       <div class="icons" id="panel7">
+         <button class="btn" id="table" data-toggle="tooltip" title="Table"><i class="fa fa-table" aria-hidden="true"></i></button>
+         <button class="btn" id="link" data-toggle="tooltip" title="Link"><i class="fa fa-link" aria-hidden="true"></i></button>
+         <div class="dropdown" style="display:inline;">
+           <button class="btn dropdown-toggle" data-toggle="dropdown" title="Header"><i class="fa fa-header" aria-hidden="true"></i>  <span class="caret"></span></button>
+           <ul class="dropdown-menu">
+             <li>
+               <a href="#"><h1>H1</h1></a>
+             </li>
+             <li>
+               <a href="#"><h2>H2</h2></a>
+             </li>
+             <li>
+               <a href="#"><h3>H3</h3></a>
+             </li>
+             <li>
+               <a href="#"><h4>H4</h4></a>
+             </li>
+             <li>
+               <a href="#"><h5>H5</h5></a>
+             </li>
+             <li>
+               <a href="#"><h6>H6</h6></a>
+             </li>
+           </ul>
+         </div>
+       </div>
+       <div class="icons" id="panel2">
+         <button class="btn" id="listol" data-toggle="tooltip" title="Ordered list"><i class="fa fa-list-ol" aria-hidden="true"></i></button>
+         <button class="btn" id="listul" data-toggle="tooltip" title="Unordered list"><i class="fa fa-list-ul" aria-hidden="true"></i></button>
+       </div>
+       <div class="icons" id="panel3">
+         <button class="btn" id="fileCode" data-toggle="tooltip" title="Code block"><i class="fa fa-file-code-o" aria-hidden="true"></i></button>
+         <button class="btn" id="code" data-toggle="tooltip" title="Code"><i class="fa fa-code" aria-hidden="true"></i></button>
+       </div>
+       <div class="icons" id="panel4">
+         <button class="btn" id="minus" data-toggle="tooltip" title="Horizontal Rule"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
+         <button class="btn" id="paragraph" data-toggle="tooltip" title="Paragraph"><i class="fa fa-paragraph" aria-hidden="true"></i></button>
+       </div>
+       <div class="icons" id="panel5">
+         <button class="btn" id="quoteL" data-toggle="tooltip" title="Blockquote"><i class="fa fa-indent" aria-hidden="true"></i></button>
+         <button class="btn" id="quoteR" data-toggle="tooltip" title="End blockquote"><i class="fa fa-outdent" aria-hidden="true"></i></button>
+       </div>
+       <div class="icons" id="panel6">
+         <button class="btn" id="fileImage" data-toggle="tooltip" title="Image"><i class="fa fa-file-image-o" aria-hidden="true"></i></button>
+         <button class="btn" id="video" data-toggle="tooltip" title="Video"><i class="fa fa-youtube-play" aria-hidden="true"></i></button>
+         <button class="btn btn-success" id="refresh" data-toggle="tooltip" title="Reset"><i class="fa fa-refresh"></i></button>
+       </div>
+     </div>
+     <div class="textarea">
+       <textarea id="textarea" class="form-control" rows="20" autofocus style="font-size:large"></textarea>
+     </div>
+     <div class="lower">
+       <button class="btn btn-success" type="button" data-toggle="tooltip" title="Copy"><i class="fa fa-copy"> Copy</i></button>
+     </div>
+   </article>
+   <article class="right-panel">
+   </article>
+  </section>
+  <footer>
+
+  </footer>
 </body>
 </html>

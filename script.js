@@ -1,6 +1,6 @@
 $(document).ready(function(){
   console.log("ready");
-//  start();
+  textarea = $("textarea");
   $("#bold").on('click',bold);
   $("#emphasis").on('click',emphasis);
   $("#strikethrough").on('click',strikethrough);
@@ -10,10 +10,10 @@ $(document).ready(function(){
   $("#listul").on('click',listul);
   $("#fileCode").on('click',fileCode);
   $("#code").on('click',code);
-  $("#minus").on('click',minus);
+  $("#minus").on('click',hr);
   $("#paragraph").on('click',paragraph);
-  $("#quoteL").on('click',quoteL);
-  $("#quoteR").on('click',quoteR);
+  $("#quoteL").on('click',blockQstart);
+  $("#quoteR").on('click',blockQend);
   $("#fileImage").on('click',fileImage);
   $("#video").on('click',video);
   $("ul li:nth-child(1)").on('click',function(){header('h1');});
@@ -24,24 +24,35 @@ $(document).ready(function(){
   $("ul li:nth-child(6)").on('click',function(){header('h6');});
   $("#refresh").on('click',function(){
     $("textarea").val("");
+    $.cookie("pressed",0);
+    $.cookie("fileCode",0);
+  })
+  $.cookie("fileCode",0);
+  $.cookie("pressed",0);
+  $("textarea").on("keypress",function(e){
+    console.log($.cookie("fileCode"));
+      if(e.keyCode == 13){
+        e.preventDefault();
+        $.cookie("pressed",Number($.cookie("pressed")) + 1);
+        console.log("pressed: ",$.cookie("pressed"));
+        if(Number($.cookie("pressed")) < 2){
+          if($.cookie("fileCode")==1){
+            $(this).val($(this).val()+'\n\t');
+          }
+          else {
+            $(this).val($(this).val()+'\n');
+          }
+        }
+      } else {
+        $.cookie("pressed",0);
+      }
   })
 });
-
-var textArea = document.getElementById("textarea");
-var $textarea = $("textarea");
 
 function bold(){
   var $textarea = $("textarea");
   var textArea = document.getElementById('textarea');
   var end,start,value,firstHalf,secondHalf;
-  /*if(!$textarea.val()){
-    $textarea.val($textarea.val()+'****');
-    $textarea.focus();
-    end = textArea.selectionStart;
-    start = end-2;
-    textArea.setSelectionRange(start,end);
-    window.getSelection().collapseToStart();
-  } else {*/
     $textarea.focus();
     end = textArea.selectionStart;
     value = textArea.value;
@@ -52,50 +63,31 @@ function bold(){
     end = firstHalf.length+15;
     start = firstHalf.length+2;
     textArea.setSelectionRange(start,end);
-  //  window.getSelection().collapseToStart();
-    //}
-  textArea.focus();
+    textArea.focus();
 }
 
 function emphasis(){
   var $textarea = $("textarea");
   var textArea = document.getElementById('textarea');
   var end,start,value,firstHalf,secondHalf;
-  /*if(!$textarea.val()){
-    $textarea.val($textarea.val()+'_<Emphasized text>_');
-    $textarea.focus();
-    end = textArea.selectionStart;
-    start = end-1;
-    textArea.setSelectionRange(start,end);
-    window.getSelection().collapseToStart();
-  } else {*/
     $textarea.focus();
     end = textArea.selectionStart;
     value = textArea.value;
     firstHalf = textArea.value.substring(0,end);
     secondHalf = textArea.value.substring(end,value.length);
-    textArea.value = firstHalf+'_<Emphasized text>_'+secondHalf;
+    textArea.value = firstHalf+'__'+secondHalf;
     textArea.focus();
-    end = firstHalf.length+18;
+    end = firstHalf.length+2;
     start = firstHalf.length+1;
     textArea.setSelectionRange(start,end);
-    //window.getSelection().collapseToStart();
-    //}
-  textArea.focus();
+    window.getSelection().collapseToStart()
+    textArea.focus();
 }
 
 function strikethrough(){
   var $textarea = $("textarea");
   var textArea = document.getElementById('textarea');
   var end,start,value,firstHalf,secondHalf;
-  if(!$textarea.val()){
-    $textarea.val($textarea.val()+'~~');
-    $textarea.focus();
-    end = textArea.selectionStart;
-    start = end-1;
-    textArea.setSelectionRange(start,end);
-    window.getSelection().collapseToStart();
-  } else {
     $textarea.focus();
     end = textArea.selectionStart;
     value = textArea.value;
@@ -107,8 +99,7 @@ function strikethrough(){
     start = firstHalf.length+1;
     textArea.setSelectionRange(start,end);
     window.getSelection().collapseToStart();
-    }
-  textArea.focus();
+    textArea.focus();
 }
 
 function table(){
@@ -119,13 +110,6 @@ function link(){
   var $textarea = $("textarea");
   var textArea = document.getElementById('textarea');
   var end,start,firstHalf,secondHalf;
-  if(!$textarea.val()){
-    $textarea.val($textarea.val()+'[<text_here>](<link_here>)')
-    $textarea.focus();
-    end = 12;
-    start = 1;
-    textArea.setSelectionRange(start,end);
-  } else {
     end = textArea.selectionStart;
     firstHalf = textArea.value.substring(0,end);
     secondHalf = textArea.value.substring(end,textArea.value.length);
@@ -134,7 +118,6 @@ function link(){
     end = firstHalf.length + 12;
     start = firstHalf.length + 1;
     textArea.setSelectionRange(start,end);
-  }
 }
 
 function header(size){
@@ -201,7 +184,11 @@ function listul(){
 }
 
 function fileCode(){
-
+  $textarea = $("textarea");
+  $textarea.val($textarea.val()+"\n\n\t");
+  $.cookie("fileCode",1);
+  $.cookie("pressed",0);
+  $textarea.focus();
 }
 
 function code(){
@@ -221,20 +208,37 @@ function code(){
   }
 }
 
-function minus(){
-
+function hr(){
+  var textArea = document.getElementById('textarea');
+  var $textarea = $("textarea");
+  if(!$textarea.val()){
+    $textarea.val("***\n")
+  }
+  else {
+    $textarea.val($textarea.val()+'\n\n***\n')
+  }
+  textarea.focus();
 }
 
 function paragraph(){
 
 }
 
-function quoteL(){
-
+function blockQstart(){
+  var $textarea = $("textarea");
+  if(!$textarea.val()) $textarea.val($textarea.val()+'> Blockquote')
+  else {
+    $textarea.val($textarea.val()+'\n> Blockquote');
+  }
+  $textarea.focus();
 }
 
-function quoteR(){
-
+function blockQend(){
+  var $textarea = $("textarea");
+  if($textarea.val())  {
+    $textarea.val($textarea.val()+'\n\n')
+  }
+  $textarea.focus();
 }
 
 function fileImage(){
