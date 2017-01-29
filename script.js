@@ -27,6 +27,15 @@ $(document).ready(function(){
     sessionStorage.setItem("fileCode",0);
     sessionStorage.setItem("enterPressed",0);
   })
+  $("#textarea").on("keyup",function(){
+      if(($(this).val() == sessionStorage.getItem("beforeFileCodeValue")) ||
+          ($(this).val() == sessionStorage.getItem("beforeFileCodeValue_enter")) ||
+          ($(this).val() == sessionStorage.getItem("beforeFileCodeValue_enter2"))){
+        console.log('removed filecode...');
+        sessionStorage.setItem("fileCode",0);
+        sessionStorage.setItem("enterPressed",0);
+      }
+  })
   $("#textarea").on("keypress",function(e){
     if(sessionStorage.getItem("fileCode") == 1){
       console.log("sessionStorage file code is 1");
@@ -34,13 +43,10 @@ $(document).ready(function(){
         console.log("enter is pressed");
         sessionStorage.enterPressed = Number(sessionStorage.enterPressed) + 1;
         if(sessionStorage.getItem("enterPressed") == 1){
-          console.log("type: "+ typeof sessionStorage.getItem("enterPressed"));
-          console.log("enter pressed: "+sessionStorage.getItem("enterPressed"));
-          console.log("enter pressed only once");
+          console.log("enter pressed once");
           e.preventDefault();
           $(this).val($(this).val()+"\n\t");    //append textarea with \n and \t
         } else if (sessionStorage.getItem("enterPressed") == 2) {
-          console.log("enter pressed: "+sessionStorage.getItem("enterPressed"));
           console.log("enter pressed twice");
           $(this).val($(this).val()+"\n");    //append textarea with \n     //leave fileCode
           sessionStorage.setItem("fileCode",0);
@@ -190,6 +196,12 @@ function listul(){
 
 function fileCode(){
   $textarea = $("textarea");
+  sessionStorage.setItem("beforeFileCodeValue",$textarea.val());
+  sessionStorage.setItem("beforeFileCodeValue_enter",$textarea.val()+"\n");
+  sessionStorage.setItem("beforeFileCodeValue_enter2",$textarea.val()+"\n\n");
+  console.log(sessionStorage.getItem("beforeFileCodeValue")+"1234");
+  console.log(sessionStorage.getItem("beforeFileCodeValue_enter")+"1234");
+  console.log(sessionStorage.getItem("beforeFileCodeValue_enter2")+"1234");
   $textarea.val($textarea.val()+"\n\n\t");
   sessionStorage.setItem("fileCode",1);
   sessionStorage.setItem("enterPressed",Number(0));
