@@ -22,55 +22,8 @@ $(document).ready(function(){
   $("ul li:nth-child(4)").on('click',function(){header('h4');});
   $("ul li:nth-child(5)").on('click',function(){header('h5');});
   $("ul li:nth-child(6)").on('click',function(){header('h6');});
-  //keyUpEvent();
+  keydownEvent();
   refreshEvent();
-  $("#textarea").on("keydown",function(e){
-    if(e.keyCode == 13){
-      if(sessionStorage.getItem("fileCode") == 1){
-        console.log("sessionStorage filecode is 1");
-          console.log("enter is pressed");
-          sessionStorage.enterPressed = Number(sessionStorage.enterPressed) + 1;
-          if(sessionStorage.getItem("enterPressed") == 1){
-            console.log("enter pressed once");
-            e.preventDefault();
-            $(this).val($(this).val()+"\n\t");    //append textarea with \n and \t
-          } else if (sessionStorage.getItem("enterPressed") == 2) {
-            console.log("enter pressed twice");
-            initializeSessions();
-          }
-        }else if(sessionStorage.getItem("listul") == 1){
-          if(sessionStorage.getItem("fileCode") == 1){
-            sessionStorage.setItem("fileCode",0);
-          }
-          console.log("sessionStorage listul is 1");
-          console.log("enter is pressed");
-            sessionStorage.enterPressed = Number(sessionStorage.enterPressed) + 1;
-            if(sessionStorage.enterPressed == 1){
-              e.preventDefault();
-              console.log("enter pressed once");
-              $(this).val($(this).val()+"\n* ");
-            }
-            else if(sessionStorage.enterPressed == 2){
-              console.log("enter pressed twice");
-              $textarea.val($textarea.val().substr(0,$textarea.val().length-2))
-              sessionStorage.setItem("listul",0);
-              sessionStorage.setItem("enterPressed",0)
-            }
-          }
-      }else if (e.keyCode == 8) {
-        console.log("backspace pressed");
-        if(sessionStorage.enterPressed == 1){
-          console.log("enter with backspace");
-          initializeSessions();
-        } else if ($(this).val().search(/(\t)$/) == ($(this).val().length-1)) {
-          console.log("backspace without preceeding enter");
-          initializeSessions();
-        }
-      }
-      else{
-        sessionStorage.enterPressed = 0;
-      }
-  })
 });
 
 function refreshEvent(){
@@ -88,6 +41,69 @@ function initializeSessions(){
   sessionStorage.enterPressed = 0;
   sessionStorage.listul = 0;
   sessionStorage.fileCode = 0;
+  sessionStorage.listol = 0;
+  sessionStorage.listnum = 0;
+}
+
+function keydownEvent(){
+  $("#textarea").on("keydown",function(e){
+    if(e.keyCode == 13){
+      sessionStorage.enterPressed = Number(sessionStorage.enterPressed) + 1;
+      if(sessionStorage.getItem("fileCode") == 1){
+        console.log("sessionStorage filecode is 1");
+          console.log("enter is pressed");
+          if(sessionStorage.getItem("enterPressed") == 1){
+            console.log("enter pressed once");
+            e.preventDefault();
+            $(this).val($(this).val()+"\n\t");    //append textarea with \n and \t
+          } else if (sessionStorage.getItem("enterPressed") == 2) {
+            console.log("enter pressed twice");
+            initializeSessions();
+          }
+        }
+        else if(sessionStorage.getItem("listul") == 1){
+          if(sessionStorage.getItem("fileCode") == 1){
+            sessionStorage.setItem("fileCode",0);
+          }
+          console.log("sessionStorage listul is 1");
+          console.log("enter is pressed");
+            //sessionStorage.enterPressed = Number(sessionStorage.enterPressed) + 1;
+            if(sessionStorage.enterPressed == 1){
+              e.preventDefault();
+              console.log("enter pressed once");
+              $(this).val($(this).val()+"\n* ");
+            }
+            else if(sessionStorage.enterPressed == 2){
+              console.log("enter pressed twice");
+              $textarea.val($textarea.val().substr(0,$textarea.val().length-2))
+              initializeSessions();
+            }
+          }
+          else if (sessionStorage.getItem("listol") == 1) {
+            //sessionStorage.enterPressed = Number(sessionStorage.enterPressed) + 1;
+            if(sessionStorage.enterPressed == 1){
+              e.preventDefault();
+              sessionStorage.listnum = Number(sessionStorage.listnum) + 1;
+              $(this).val($(this).val()+"\n"+sessionStorage.getItem("listnum")+" ");
+            }else if (sessionStorage.enterPressed == 2) {
+              $textarea.val($textarea.val().substr(0,$textarea.val().length-2));
+              initializeSessions();
+            }
+          }
+      }else if (e.keyCode == 8) {
+        console.log("backspace pressed");
+        if(sessionStorage.enterPressed == 1){
+          console.log("enter with backspace");
+          initializeSessions();
+        } else if ($(this).val().search(/(\t)$/) == ($(this).val().length-1)) {
+          console.log("backspace without preceeding enter");
+          initializeSessions();
+        }
+      }
+      else{
+        sessionStorage.enterPressed = 0;
+      }
+  })
 }
 
 function bold(){
@@ -217,10 +233,20 @@ function header(size){
 }
 
 function listol(){
-
+  initializeSessions();
+  sessionStorage.listol = 1;
+  sessionStorage.listnum = 1;
+  $textarea = $('#textarea');
+  if(!$textarea.val()){
+    $textarea.val($textarea.val()+"\n"+sessionStorage.getItem("listnum")+" ");
+  }else {
+    $textarea.val($textarea.val()+"\n\n"+sessionStorage.getItem("listnum")+" ");
+  }
+  $textarea.focus();
 }
 
 function listul(){
+  initializeSessions();
   sessionStorage.setItem("listul",1);
   $textarea = $('#textarea');
   if(!$textarea.val()){
