@@ -24,28 +24,33 @@ $(document).ready(function(){
   $("ul li:nth-child(6)").on('click',function(){header('h6');});
   $("#refresh").on('click',function(){
     $("textarea").val("");
-    $.cookie("pressed",0);
-    $.cookie("fileCode",0);
+    sessionStorage.setItem("fileCode",0);
+    sessionStorage.setItem("enterPressed",0);
   })
-  $.cookie("fileCode",0);
-  $.cookie("pressed",0);
-  $("textarea").on("keypress",function(e){
-    console.log($.cookie("fileCode"));
+  $("#textarea").on("keypress",function(e){
+    if(sessionStorage.getItem("fileCode") == 1){
+      console.log("sessionStorage file code is 1");
       if(e.keyCode == 13){
-        e.preventDefault();
-        $.cookie("pressed",Number($.cookie("pressed")) + 1);
-        console.log("pressed: ",$.cookie("pressed"));
-        if(Number($.cookie("pressed")) < 2){
-          if($.cookie("fileCode")==1){
-            $(this).val($(this).val()+'\n\t');
-          }
-          else {
-            $(this).val($(this).val()+'\n');
-          }
+        console.log("enter is pressed");
+        sessionStorage.enterPressed = Number(sessionStorage.enterPressed) + 1;
+        if(sessionStorage.getItem("enterPressed") == 1){
+          console.log("type: "+ typeof sessionStorage.getItem("enterPressed"));
+          console.log("enter pressed: "+sessionStorage.getItem("enterPressed"));
+          console.log("enter pressed only once");
+          e.preventDefault();
+          $(this).val($(this).val()+"\n\t");    //append textarea with \n and \t
+        } else if (sessionStorage.getItem("enterPressed") == 2) {
+          console.log("enter pressed: "+sessionStorage.getItem("enterPressed"));
+          console.log("enter pressed twice");
+          $(this).val($(this).val()+"\n");    //append textarea with \n     //leave fileCode
+          sessionStorage.setItem("fileCode",0);
+          sessionStorage.setItem("enterPressed",0)
         }
-      } else {
-        $.cookie("pressed",0);
       }
+      else {
+        sessionStorage.setItem("enterPressed",0);
+      }
+    }
   })
 });
 
@@ -186,8 +191,8 @@ function listul(){
 function fileCode(){
   $textarea = $("textarea");
   $textarea.val($textarea.val()+"\n\n\t");
-  $.cookie("fileCode",1);
-  $.cookie("pressed",0);
+  sessionStorage.setItem("fileCode",1);
+  sessionStorage.setItem("enterPressed",Number(0));
   $textarea.focus();
 }
 
