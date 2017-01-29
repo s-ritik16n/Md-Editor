@@ -62,11 +62,13 @@ $(document).ready(function(){
         if(sessionStorage.enterPressed == 1){
           console.log("enter with backspace");
           initializeSessions();
+        } else if ($(this).val().search(/(\t)$/) == ($(this).val().length-1)) {
+          console.log("backspace without preceeding enter");
+          initializeSessions();
         }
       }
       else{
         sessionStorage.enterPressed = 0;
-        //sessionStorage.setItem("enterPressed",0);
       }
   })
 });
