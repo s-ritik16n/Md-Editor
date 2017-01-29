@@ -1,6 +1,6 @@
 $(document).ready(function(){
   console.log("ready");
-  textarea = $("textarea");
+  initializeSessions();
   $("#bold").on('click',bold);
   $("#emphasis").on('click',emphasis);
   $("#strikethrough").on('click',strikethrough);
@@ -22,23 +22,11 @@ $(document).ready(function(){
   $("ul li:nth-child(4)").on('click',function(){header('h4');});
   $("ul li:nth-child(5)").on('click',function(){header('h5');});
   $("ul li:nth-child(6)").on('click',function(){header('h6');});
-  $("#refresh").on('click',function(){
-    $("textarea").val("");
-    sessionStorage.setItem("fileCode",0);
-    sessionStorage.setItem("enterPressed",0);
-  })
-  $("#textarea").on("keyup",function(){
-      if(($(this).val() == sessionStorage.getItem("beforeFileCodeValue")) ||
-          ($(this).val() == sessionStorage.getItem("beforeFileCodeValue_enter")) ||
-          ($(this).val() == sessionStorage.getItem("beforeFileCodeValue_enter2"))){
-        console.log('removed filecode...');
-        sessionStorage.setItem("fileCode",0);
-        sessionStorage.setItem("enterPressed",0);
-      }
-  })
+  keyUpEvent();
+  refreshEvent();
   $("#textarea").on("keypress",function(e){
     if(sessionStorage.getItem("fileCode") == 1){
-      console.log("sessionStorage file code is 1");
+      console.log("sessionStorage filecode is 1");
       if(e.keyCode == 13){
         console.log("enter is pressed");
         sessionStorage.enterPressed = Number(sessionStorage.enterPressed) + 1;
@@ -48,17 +36,69 @@ $(document).ready(function(){
           $(this).val($(this).val()+"\n\t");    //append textarea with \n and \t
         } else if (sessionStorage.getItem("enterPressed") == 2) {
           console.log("enter pressed twice");
-          $(this).val($(this).val()+"\n");    //append textarea with \n     //leave fileCode
-          sessionStorage.setItem("fileCode",0);
+          initializeSessions();
+        }
+      }else {
+        sessionStorage.setItem("enterPressed",0);
+      }
+    }
+    if(sessionStorage.getItem("listul") == 1){
+      if(sessionStorage.getItem("fileCode") == 1){
+        sessionStorage.setItem("fileCode",0);
+      }
+      console.log("sessionStorage listul is 1");
+      if(e.keyCode == 13){
+        console.log("enter is pressed");
+        sessionStorage.enterPressed = Number(sessionStorage.enterPressed) + 1;
+        if(sessionStorage.enterPressed == 1){
+          e.preventDefault();
+          console.log("enter pressed once");
+          $(this).val($(this).val()+"\n* ");
+        }
+        else if(sessionStorage.enterPressed == 2){
+          console.log("enter pressed twice");
+          $textarea.val($textarea.val().substr(0,$textarea.val().length-2))
+          sessionStorage.setItem("listul",0);
           sessionStorage.setItem("enterPressed",0)
         }
       }
       else {
-        sessionStorage.setItem("enterPressed",0);
+        initializeSessions();
       }
     }
   })
 });
+
+function refreshEvent(){
+  $("#refresh").on('click',function(){
+    clear();
+    initializeSessions();
+  })
+}
+
+function clear(){
+  $("textarea").val("");
+}
+
+function keyUpEvent(){
+  $("#textarea").on("keyup",function(e){
+      if(e.keyCode == 8){
+        console.log("backspace pressed");
+        if(sessionStorage.enterPressed == 1){
+          console.log("enter with backspace");
+          initializeSessions();
+        }
+      }
+    })
+}
+function initializeSessions(){
+  sessionStorage.enterPressed = 0;
+  sessionStorage.listul = 0;
+  sessionStorage.fileCode = 0;
+  sessionStorage.beforeFileCodeValue = "";
+  sessionStorage.beforeFileCodeValue_enter = "";
+  sessionStorage.beforeFileCodeValue_enter2 = "";
+}
 
 function bold(){
   var $textarea = $("textarea");
@@ -191,20 +231,20 @@ function listol(){
 }
 
 function listul(){
-
+  sessionStorage.setItem("listul",1);
+  $textarea = $('#textarea');
+  if(!$textarea.val()){
+    $textarea.val($textarea.val()+'* ');
+  }else {
+    $textarea.val($textarea.val()+'\n\n* ');
+  }
+  $textarea.focus();
 }
 
 function fileCode(){
-  $textarea = $("textarea");
-  sessionStorage.setItem("beforeFileCodeValue",$textarea.val());
-  sessionStorage.setItem("beforeFileCodeValue_enter",$textarea.val()+"\n");
-  sessionStorage.setItem("beforeFileCodeValue_enter2",$textarea.val()+"\n\n");
-  console.log(sessionStorage.getItem("beforeFileCodeValue")+"1234");
-  console.log(sessionStorage.getItem("beforeFileCodeValue_enter")+"1234");
-  console.log(sessionStorage.getItem("beforeFileCodeValue_enter2")+"1234");
+  $textarea = $("#textarea");
   $textarea.val($textarea.val()+"\n\n\t");
   sessionStorage.setItem("fileCode",1);
-  sessionStorage.setItem("enterPressed",Number(0));
   $textarea.focus();
 }
 
