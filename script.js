@@ -84,9 +84,9 @@ function keydownEvent(){
             if(sessionStorage.enterPressed == 1){
               e.preventDefault();
               sessionStorage.listnum = Number(sessionStorage.listnum) + 1;
-              $(this).val($(this).val()+"\n"+sessionStorage.getItem("listnum")+" ");
+              $(this).val($(this).val()+"\n"+sessionStorage.getItem("listnum")+". ");
             }else if (sessionStorage.enterPressed == 2) {
-              $textarea.val($textarea.val().substr(0,$textarea.val().length-2));
+              $textarea.val($textarea.val().substr(0,$textarea.val().length-3));
               initializeSessions();
             }
           }
@@ -238,9 +238,9 @@ function listol(){
   sessionStorage.listnum = 1;
   $textarea = $('#textarea');
   if(!$textarea.val()){
-    $textarea.val($textarea.val()+"\n"+sessionStorage.getItem("listnum")+" ");
+    $textarea.val($textarea.val()+"\n"+sessionStorage.getItem("listnum")+". ");
   }else {
-    $textarea.val($textarea.val()+"\n\n"+sessionStorage.getItem("listnum")+" ");
+    $textarea.val($textarea.val()+"\n\n"+sessionStorage.getItem("listnum")+". ");
   }
   $textarea.focus();
 }
