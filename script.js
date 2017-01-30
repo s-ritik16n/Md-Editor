@@ -159,9 +159,47 @@ function strikethrough(){
     textArea.focus();
 }
 
-function table(){
-
+function promptUser(){
+  let rowcol = prompt("Enter number of rows and columns (comma seperated)");
+  return rowcol;
 }
+
+function table(){
+  var rowcol;
+  do {
+    rowcol = promptUser();
+  } while ((rowcol != null) && (rowcol.length <2));
+  if(rowcol!= null){
+    arr = rowcol.split(",");
+    createTable(arr);
+    $("#textarea").focus();
+    document.getElementById("msg").innerHTML = "PS: Tables aren't a part of core Markdown"
+    setTimeout(function(){
+      document.getElementById("msg").innerHTML = ""
+    },3000)
+  }
+}
+
+function createTable(arr){
+    $textArea = $("#textarea");
+    $textArea.val($textArea.val()+"| ")
+    for (var i = 0; i < arr[0]; i++) {
+      $textArea.val($textArea.val()+"column_head |")
+    }
+    $textArea.val($textArea.val()+"\n")
+    for (var i = 0; i < arr[0]; i++) {
+      $textArea.val($textArea.val()+"--- |")
+    }
+    $textArea.val($textArea.val().substr(0,$textArea.val().length-2));
+    $textArea.val($textArea.val()+"\n");
+    for (var i = 0; i < arr[1]; i++) {
+      for (var j = 0; j < arr[0]; j++) {
+        $textArea.val($textArea.val()+"data |")
+      }
+      $textArea.val($textArea.val().substr(0,$textArea.val().length-2));
+      $textArea.val($textArea.val()+"\n");
+    }
+  }
 
 function link(){
   var $textarea = $("textarea");
