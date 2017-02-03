@@ -106,62 +106,38 @@ function keydownEvent(){
   })
 }
 
-function bold(){
-  var $textarea = $("textarea");
+function selection(endOffset,startOffset,midString){
   var textArea = document.getElementById('textarea');
   var end,start,value,firstHalf,secondHalf;
-    $textarea.focus();
-    end = textArea.selectionStart;
-    value = textArea.value;
-    firstHalf = textArea.value.substring(0,end);
-    secondHalf = textArea.value.substring(end,value.length);
-    textArea.value = firstHalf+'**<strong text>**'+secondHalf;
-    textArea.focus();
-    end = firstHalf.length+15;
-    start = firstHalf.length+2;
-    textArea.setSelectionRange(start,end);
-    textArea.focus();
+  end = textArea.selectionStart;
+  value = textArea.value;
+  firstHalf = textArea.value.substring(0,end);
+  secondHalf = textArea.value.substring(end,value.length);
+  textArea.value = firstHalf+midString+secondHalf;
+  textArea.focus();
+  end = firstHalf.length+Number(endOffset);
+  start = firstHalf.length+Number(startOffset);
+  textArea.setSelectionRange(start,end);
+}
+
+function bold(){
+  var $textarea = $("textarea");
+  $textarea.focus();
+  selection(15,2,"**<strong text>**")
 }
 
 function emphasis(){
-  var $textarea = $("textarea");
-  var textArea = document.getElementById('textarea');
-  var end,start,value,firstHalf,secondHalf;
-    $textarea.focus();
-    end = textArea.selectionStart;
-    value = textArea.value;
-    firstHalf = textArea.value.substring(0,end);
-    secondHalf = textArea.value.substring(end,value.length);
-    textArea.value = firstHalf+'__'+secondHalf;
-    textArea.focus();
-    end = firstHalf.length+2;
-    start = firstHalf.length+1;
-    textArea.setSelectionRange(start,end);
-    window.getSelection().collapseToStart()
-    textArea.focus();
+  var $textarea = $("#textarea");
+  $textarea.focus();
+  selection(2,1,"__")
+  window.getSelection().collapseToStart()
 }
 
 function strikethrough(){
   var $textarea = $("textarea");
-  var textArea = document.getElementById('textarea');
-  var end,start,value,firstHalf,secondHalf;
-    $textarea.focus();
-    end = textArea.selectionStart;
-    value = textArea.value;
-    firstHalf = textArea.value.substring(0,end);
-    secondHalf = textArea.value.substring(end,value.length);
-    textArea.value = firstHalf+'~~'+secondHalf;
-    textArea.focus();
-    end = firstHalf.length+2;
-    start = firstHalf.length+1;
-    textArea.setSelectionRange(start,end);
-    window.getSelection().collapseToStart();
-    textArea.focus();
-}
-
-function promptUser(){
-  let rowcol = prompt("Enter number of rows and columns (comma seperated)");
-  return rowcol;
+  $textarea.focus();
+  selection(2,1,"~~");
+  window.getSelection().collapseToStart();
 }
 
 function table(){
@@ -178,6 +154,11 @@ function table(){
       document.getElementById("msg").innerHTML = ""
     },3000)
   }
+}
+
+function promptUser(){
+  let rowcol = prompt("Enter number of rows and columns (comma seperated)");
+  return rowcol;
 }
 
 function createTable(arr){
@@ -203,68 +184,66 @@ function createTable(arr){
 
 function link(){
   var $textarea = $("textarea");
-  var textArea = document.getElementById('textarea');
-  var end,start,firstHalf,secondHalf;
-    end = textArea.selectionStart;
-    firstHalf = textArea.value.substring(0,end);
-    secondHalf = textArea.value.substring(end,textArea.value.length);
-    textArea.value = firstHalf + '[<text_here>](<link_here>)' + secondHalf;
-    $textarea.focus();
-    end = firstHalf.length + 12;
-    start = firstHalf.length + 1;
-    textArea.setSelectionRange(start,end);
+  $textarea.focus();
+  selection(12,1,"[<text_here>](<link_here>)")
 }
 
 function header(size){
   var $textarea = $("textarea")
   switch (size) {
     case 'h1':
-    if(!$textarea.val()){
-      $textarea.val('# ')
-    }
-    else {
-      $textarea.val($textarea.val()+'\n# ')
-    }
+      if(!$textarea.val()){
+        $textarea.val('# ')
+      }
+      else {
+        $textarea.focus();
+        selection(4,4,"\n\n# \n\n");
+      }
       break;
     case 'h2':
-    if(!$textarea.val()){
-      $textarea.val('## ')
-    }
-    else {
-      $textarea.val($textarea.val()+'\n## ')
-    }
+      if(!$textarea.val()){
+        $textarea.val('## ')
+      }
+      else {
+        $textarea.focus();
+        selection(5,5,"\n\n## \n\n");
+      }
       break;
     case 'h3':
-    if(!$textarea.val()){
-      $textarea.val('### ')
-    }
-    else {
-      $textarea.val($textarea.val()+'\n### ')
-    }
+      if(!$textarea.val()){
+        $textarea.val('### ')
+      }
+      else {
+        $textarea.focus();
+        selection(6,6,"\n\n### \n\n");
+      }
       break;
     case 'h4':
-    if(!$textarea.val()){
-      $textarea.val('#### ')
-    }
-    else {
-      $textarea.val($textarea.val()+'\n#### ')
-    }
+      if(!$textarea.val()){
+        $textarea.val('#### ')
+      }
+      else {
+        $textarea.focus();
+        selection(7,7,"\n\n#### \n\n");
+      }
       break;
     case 'h5':
-    if(!$textarea.val()){
-      $textarea.val('##### ')
-    }
-    else {
-      $textarea.val($textarea.val()+'\n##### ')
-    }
+      if(!$textarea.val()){
+        $textarea.val('##### ')
+      }
+      else {
+        $textarea.focus();
+        selection(8,8,"\n\n##### \n\n");
+      }
       break;
     case 'h6':
-    if(!$textarea.val()){
-      $textarea.val('###### ')
-    }
-    else {
-      $textarea.val($textarea.val()+'\n###### ')
-    }
+      if(!$textarea.val()){
+        $textarea.val('###### ')
+      }
+      else {
+        $textarea.focus();
+        selection(9,9,"\n\n###### \n\n");
+      }
       break;
   }
   $textarea.focus();
@@ -316,8 +295,6 @@ function code(){
     $textarea.focus();
     textArea.setSelectionRange(1,7);
   } else {
-    var end = textArea.selectionStart;
-
     $textarea.val($textarea.val()+'`<code>`');
 
   }
