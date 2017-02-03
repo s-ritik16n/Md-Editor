@@ -71,11 +71,12 @@ function keydownEvent(){
             if(sessionStorage.enterPressed == 1){
               e.preventDefault();
               console.log("enter pressed once");
-              $(this).val($(this).val()+"\n* ");
+              selection(3,3,"\n* ")
             }
             else if(sessionStorage.enterPressed == 2){
               console.log("enter pressed twice");
-              $textarea.val($textarea.val().substr(0,$textarea.val().length-2))
+              stripOff(2);
+              //$textarea.val($textarea.val().substr(0,$textarea.val().length-2))
               initializeSessions();
             }
           }
@@ -87,12 +88,7 @@ function keydownEvent(){
               selection(4,4,"\n"+sessionStorage.getItem("listnum")+". ")
               //$(this).val($(this).val()+);
             }else if (sessionStorage.enterPressed == 2) {
-              var textarea = document.getElementById("textarea");
-              end = textarea.selectionStart;
-              value = textarea.value;
-              firstHalf = textarea.value.substring(0,end-3);
-              secondHalf = textarea.value.substring(end,value.length);
-              textarea.value = firstHalf+secondHalf;
+              stripOff(3);
               initializeSessions();
             }
           }
@@ -110,6 +106,15 @@ function keydownEvent(){
         sessionStorage.enterPressed = 0;
       }
   })
+}
+
+function stripOff(reverse){
+  var textarea = document.getElementById("textarea");
+  end = textarea.selectionStart;
+  value = textarea.value;
+  firstHalf = textarea.value.substring(0,end-Number(reverse));
+  secondHalf = textarea.value.substring(end,value.length);
+  textarea.value = firstHalf+secondHalf;
 }
 
 function selection(endOffset,startOffset,midString){
@@ -264,12 +269,8 @@ function listol(){
     $textarea.val($textarea.val()+"\n"+sessionStorage.getItem("listnum")+". ");
   }else {
     $textarea.focus();
-    if(sessionStorage.getItem("listnum") == 1){
-      selection(5,5,"\n\n"+sessionStorage.getItem("listnum")+". \n\n")
-    }
-    //$textarea.val($textarea.val()+);
+    selection(5,5,"\n\n"+sessionStorage.getItem("listnum")+". \n\n")
   }
-  $textarea.focus();
 }
 
 function listul(){
@@ -279,9 +280,9 @@ function listul(){
   if(!$textarea.val()){
     $textarea.val($textarea.val()+'* ');
   }else {
-    $textarea.val($textarea.val()+'\n\n* ');
+    $textarea.focus();
+    selection(4,4,"\n\n* \n\n")
   }
-  $textarea.focus();
 }
 
 function fileCode(){
