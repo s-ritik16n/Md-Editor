@@ -84,9 +84,15 @@ function keydownEvent(){
             if(sessionStorage.enterPressed == 1){
               e.preventDefault();
               sessionStorage.listnum = Number(sessionStorage.listnum) + 1;
-              $(this).val($(this).val()+"\n"+sessionStorage.getItem("listnum")+". ");
+              selection(4,4,"\n"+sessionStorage.getItem("listnum")+". ")
+              //$(this).val($(this).val()+);
             }else if (sessionStorage.enterPressed == 2) {
-              $textarea.val($textarea.val().substr(0,$textarea.val().length-3));
+              var textarea = document.getElementById("textarea");
+              end = textarea.selectionStart;
+              value = textarea.value;
+              firstHalf = textarea.value.substring(0,end-3);
+              secondHalf = textarea.value.substring(end,value.length);
+              textarea.value = firstHalf+secondHalf;
               initializeSessions();
             }
           }
@@ -257,7 +263,11 @@ function listol(){
   if(!$textarea.val()){
     $textarea.val($textarea.val()+"\n"+sessionStorage.getItem("listnum")+". ");
   }else {
-    $textarea.val($textarea.val()+"\n\n"+sessionStorage.getItem("listnum")+". ");
+    $textarea.focus();
+    if(sessionStorage.getItem("listnum") == 1){
+      selection(5,5,"\n\n"+sessionStorage.getItem("listnum")+". \n\n")
+    }
+    //$textarea.val($textarea.val()+);
   }
   $textarea.focus();
 }
