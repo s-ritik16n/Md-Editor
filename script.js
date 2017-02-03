@@ -67,27 +67,25 @@ function keydownEvent(){
           }
           console.log("sessionStorage listul is 1");
           console.log("enter is pressed");
-            //sessionStorage.enterPressed = Number(sessionStorage.enterPressed) + 1;
-            if(sessionStorage.enterPressed == 1){
-              e.preventDefault();
-              console.log("enter pressed once");
-              selection(3,3,"\n* ")
-            }
-            else if(sessionStorage.enterPressed == 2){
-              console.log("enter pressed twice");
-              stripOff(2);
-              //$textarea.val($textarea.val().substr(0,$textarea.val().length-2))
-              initializeSessions();
-            }
+          if(sessionStorage.enterPressed == 1){
+            e.preventDefault();
+            console.log("enter pressed once");
+            selection(3,3,"\n* ")
           }
-          else if (sessionStorage.getItem("listol") == 1) {
-            //sessionStorage.enterPressed = Number(sessionStorage.enterPressed) + 1;
-            if(sessionStorage.enterPressed == 1){
-              e.preventDefault();
-              sessionStorage.listnum = Number(sessionStorage.listnum) + 1;
-              selection(4,4,"\n"+sessionStorage.getItem("listnum")+". ")
-              //$(this).val($(this).val()+);
-            }else if (sessionStorage.enterPressed == 2) {
+          else if(sessionStorage.enterPressed == 2){
+            console.log("enter pressed twice");
+            stripOff(2);
+            initializeSessions();
+          }
+        }
+        else if (sessionStorage.getItem("listol") == 1) {
+          //sessionStorage.enterPressed = Number(sessionStorage.enterPressed) + 1;
+          if(sessionStorage.enterPressed == 1){
+            e.preventDefault();
+            sessionStorage.listnum = Number(sessionStorage.listnum) + 1;
+            selection(4,4,"\n"+sessionStorage.getItem("listnum")+". ")
+            //$(this).val($(this).val()+);
+          }else if (sessionStorage.enterPressed == 2) {
               stripOff(3);
               initializeSessions();
             }
@@ -298,17 +296,7 @@ function fileCode(){
 
 function code(){
   var $textarea = $("textarea")
-  var textArea = document.getElementById('textarea')
-  var end,start;
-  console.log(textArea);
-  if(!$textarea.val()){
-    $textarea.val($textarea.val()+'`<code>`')
-    $textarea.focus();
-    textArea.setSelectionRange(1,7);
-  } else {
-    $textarea.val($textarea.val()+'`<code>`');
-
-  }
+  selection(7,1,"`<code>`")
 }
 
 function hr(){
