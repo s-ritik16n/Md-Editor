@@ -11,11 +11,8 @@ $(document).ready(function(){
   $("#fileCode").on('click',fileCode);
   $("#code").on('click',code);
   $("#minus").on('click',hr);
-  $("#paragraph").on('click',paragraph);
   $("#quoteL").on('click',blockQstart);
-  $("#quoteR").on('click',blockQend);
   $("#fileImage").on('click',fileImage);
-  $("#video").on('click',video);
   $("ul li:nth-child(1)").on('click',function(){header('h1');});
   $("ul li:nth-child(2)").on('click',function(){header('h2');});
   $("ul li:nth-child(3)").on('click',function(){header('h3');});
@@ -34,7 +31,8 @@ function refreshEvent(){
 }
 
 function clear(){
-  $("textarea").val("");
+  $("#textarea").val("");
+  $("#textarea").focus();
 }
 
 function initializeSessions(){
@@ -55,7 +53,8 @@ function keydownEvent(){
           if(sessionStorage.getItem("enterPressed") == 1){
             console.log("enter pressed once");
             e.preventDefault();
-            $(this).val($(this).val()+"\n\t");    //append textarea with \n and \t
+            selection(2,0,"\n\t");
+            window.getSelection().collapseToEnd();
           } else if (sessionStorage.getItem("enterPressed") == 2) {
             console.log("enter pressed twice");
             initializeSessions();
@@ -153,16 +152,17 @@ function table(){
   var rowcol;
   do {
     rowcol = promptUser();
-  } while ((rowcol != null) && (rowcol.length <2));
-  if(rowcol!= null){
+    if(rowcol == null) break;
+  } while ((rowcol.split(",")[0] <= 0) || (rowcol.split(",")[1] <=0));
+  if((rowcol!= null) && (rowcol.length > 0) && (Number(rowcol.split(",")[0])>0) && (Number(rowcol.split(",")[1])>0)){
     arr = rowcol.split(",");
     createTable(arr);
-    $("#textarea").focus();
     document.getElementById("msg").innerHTML = "PS: Tables aren't a part of core Markdown"
     setTimeout(function(){
       document.getElementById("msg").innerHTML = ""
     },3000)
   }
+  $("#textarea").focus();
 }
 
 function promptUser(){
@@ -172,23 +172,50 @@ function promptUser(){
 
 function createTable(arr){
     $textArea = $("#textarea");
-    $textArea.val($textArea.val()+"| ")
+    selection(4,0,"\n\n| ");
+    window.getSelection().collapseToEnd();
+    //$textArea.val($textArea.val()+"| ")
     for (var i = 0; i < arr[0]; i++) {
-      $textArea.val($textArea.val()+"column_head |")
+      if(i != (arr[0]-1)){
+        selection(14,0," column_head |");
+        window.getSelection().collapseToEnd();
+      } else {
+        selection(13,0," column_head\n");
+        window.getSelection().collapseToEnd();
+      }
+      //$textArea.val($textArea.val()+"column_head |")
     }
-    $textArea.val($textArea.val()+"\n")
+    //    $textArea.val($textArea.val()+"\n")
     for (var i = 0; i < arr[0]; i++) {
-      $textArea.val($textArea.val()+"--- |")
+      if(i != (arr[0]-1)){
+        selection(5,0,"--- |");
+        window.getSelection().collapseToEnd();
+      } else {
+        selection(5,0,"--- \n");
+        window.getSelection().collapseToEnd();
+      }
+      //$textArea.val($textArea.val()+"--- |")
     }
-    $textArea.val($textArea.val().substr(0,$textArea.val().length-2));
-    $textArea.val($textArea.val()+"\n");
+    //$textArea.val($textArea.val().substr(0,$textArea.val().length-2));
+    //$textArea.val($textArea.val()+"\n");
     for (var i = 0; i < arr[1]; i++) {
       for (var j = 0; j < arr[0]; j++) {
-        $textArea.val($textArea.val()+"data |")
+        if(j != (arr[0]-1)){
+          selection(6,0,"data |");
+          window.getSelection().collapseToEnd();
+        } else {
+          selection(4,0,"data");
+          window.getSelection().collapseToEnd();
+        }
+        //$textArea.val($textArea.val()+"data |")
       }
-      $textArea.val($textArea.val().substr(0,$textArea.val().length-2));
-      $textArea.val($textArea.val()+"\n");
+      //$textArea.val($textArea.val().substr(0,$textArea.val().length-2));
+      selection(1,0,"\n");
+      window.getSelection().collapseToEnd();
+      //$textArea.val($textArea.val()+"\n");
     }
+    selection(1,0,"\n");
+    window.getSelection().collapseToEnd();
   }
 
 function link(){
@@ -286,9 +313,10 @@ function listul(){
 function fileCode(){
   $textarea = $("#textarea");
   if(!$textarea.val()){
-    $textarea.val($textarea.val()+"\n\t");
+    $textarea.val("\n\t");
   }else {
-    $textarea.val($textarea.val()+"\n\n\t")
+    selection(3,0,"\n\n\t\n\n");
+    window.getSelection().collapseToEnd();
   }
   sessionStorage.setItem("fileCode",1);
   $textarea.focus();
@@ -296,51 +324,40 @@ function fileCode(){
 
 function code(){
   var $textarea = $("textarea")
-  selection(7,1,"`<code>`")
+  if(!$textarea.val()){
+    selection(7,1,"`<code>`")
+  } else {
+    selection(8,2," `<code>` ")
+  }
 }
 
 function hr(){
-  var textArea = document.getElementById('textarea');
   var $textarea = $("textarea");
   if(!$textarea.val()){
-    $textarea.val("***\n")
+    $textarea.val("***\n\n");
+    $textarea.focus();
+  } else {
+    selection(7,0,"\n\n***\n\n");
+    window.getSelection().collapseToEnd();
   }
-  else {
-    $textarea.val($textarea.val()+'\n\n***\n')
-  }
-  textarea.focus();
-}
-
-function paragraph(){
-
 }
 
 function blockQstart(){
   var $textarea = $("textarea");
-  if(!$textarea.val()) $textarea.val($textarea.val()+'> Blockquote')
-  else {
-    $textarea.val($textarea.val()+'\n> Blockquote');
-  }
   $textarea.focus();
-}
-
-function blockQend(){
-  var $textarea = $("textarea");
-  if($textarea.val())  {
-    $textarea.val($textarea.val()+'\n\n')
+  if(!$textarea.val()){
+    selection(12,2,"> Blockquote")
+  } else {
+    selection(14,4,"\n\n> Blockquote\n\n")
   }
-  $textarea.focus();
 }
 
 function fileImage(){
   var $textarea = $("textarea");
   if(!$textarea.val()){
-    $textarea.val($textarea.val()+'[<alt_text>](<link> "<tooltip>")')
+    selection(11,1,'[<alt_text>](<link> "<tooltip>")')
   } else {
-    $textarea.val($textarea.val()+' [<alt_text>](<link> "<tooltip>")')
+    selection(12,2,' [<alt_text>](<link> "<tooltip>") ')
+    //$textarea.val($textarea.val()+' [<alt_text>](<link> "<tooltip>")')
   }
-}
-
-function video() {
-
 }
