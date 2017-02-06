@@ -279,7 +279,7 @@ function listol(){
   sessionStorage.listnum = 1;
   $textarea = $('#textarea');
   if(!$textarea.val()){
-    $textarea.val($textarea.val()+"\n"+sessionStorage.getItem("listnum")+". ");
+    $textarea.val(sessionStorage.getItem("listnum")+". ");
     $textarea.focus();
   }else {
     $textarea.focus();
@@ -292,7 +292,8 @@ function listul(){
   sessionStorage.setItem("listul",1);
   $textarea = $('#textarea');
   if(!$textarea.val()){
-    $textarea.val($textarea.val()+'* ');
+    $textarea.val('* ');
+    $textarea.focus();
   }else {
     $textarea.focus();
     selection(4,4,"\n\n* \n\n")
