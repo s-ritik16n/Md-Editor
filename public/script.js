@@ -23,6 +23,8 @@ $(document).ready(function(){
   refreshEvent();
 });
 
+//helper functions
+
 function refreshEvent(){
   $("#refresh").on('click',function(){
     clear();
@@ -126,50 +128,6 @@ function selection(endOffset,startOffset,midString){
   textArea.setSelectionRange(start,end);
 }
 
-function delSelection(){
-  if(window.getSelection().toString().length > 0){
-    window.getSelection().deleteFromDocument();
-  }
-}
-
-function bold(){
-  var $textarea = $("textarea");
-  $textarea.focus();
-  selection(15,2,"**<strong text>**")
-  console.log();
-}
-
-function emphasis(){
-    delSelection();
-    var $textarea = $("#textarea");
-    $textarea.focus();
-    selection(2,1,"__")
-    window.getSelection().collapseToStart()
-}
-
-function strikethrough(){
-  var $textarea = $("textarea");
-  $textarea.focus();
-  selection(2,1,"~~");
-  window.getSelection().collapseToStart();
-}
-
-function table(){
-  var rowcol;
-  do {
-    rowcol = promptUser();
-    if(rowcol == null) break;
-  } while ((rowcol.split(",")[0] <= 0) || (rowcol.split(",")[1] <=0));
-  if((rowcol!= null) && (rowcol.length > 0) && (Number(rowcol.split(",")[0])>0) && (Number(rowcol.split(",")[1])>0)){
-    arr = rowcol.split(",");
-    createTable(arr);
-    document.getElementById("msg").innerHTML = "PS: Tables aren't a part of core Markdown"
-    setTimeout(function(){
-      document.getElementById("msg").innerHTML = ""
-    },3000)
-  }
-  $("#textarea").focus();
-}
 
 function promptUser(){
   let rowcol = prompt("Enter number of rows and columns (comma seperated)");
@@ -214,6 +172,40 @@ function createTable(arr){
     selection(1,0,"\n");
     window.getSelection().collapseToEnd();
   }
+
+//event listeners
+
+function bold(){
+  var $textarea = $("textarea");
+  $textarea.focus();
+  selection(15,2,"**<strong text>**")
+  console.log();
+}
+
+function emphasis(){
+    delSelection();
+    var $textarea = $("#textarea");
+    $textarea.focus();
+    selection(2,1,"__")
+    window.getSelection().collapseToStart()
+}
+
+function table(){
+  var rowcol;
+  do {
+    rowcol = promptUser();
+    if(rowcol == null) break;
+  } while ((rowcol.split(",")[0] <= 0) || (rowcol.split(",")[1] <=0));
+  if((rowcol!= null) && (rowcol.length > 0) && (Number(rowcol.split(",")[0])>0) && (Number(rowcol.split(",")[1])>0)){
+    arr = rowcol.split(",");
+    createTable(arr);
+    document.getElementById("msg").innerHTML = "PS: Tables aren't a part of core Markdown"
+    setTimeout(function(){
+      document.getElementById("msg").innerHTML = ""
+    },3000)
+  }
+  $("#textarea").focus();
+}
 
 function link(){
   var $textarea = $("textarea");
