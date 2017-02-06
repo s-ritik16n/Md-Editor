@@ -209,10 +209,10 @@ function createTable(arr){
     for (var i = 0; i < arr[1]; i++) {
       for (var j = 0; j < arr[0]; j++) {
         if(j != (arr[0]-1)){
-          selection(6,0,"data |");
+          selection(5,0,"... |");
           window.getSelection().collapseToEnd();
         } else {
-          selection(4,0,"data");
+          selection(3,0,"...");
           window.getSelection().collapseToEnd();
         }
         //$textArea.val($textArea.val()+"data |")
