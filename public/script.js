@@ -12,12 +12,12 @@ $(document).ready(function(){
   $("#minus").on('click',hr);
   $("#quoteL").on('click',blockQstart);
   $("#fileImage").on('click',fileImage);
-  $("nav ul span li div div ul li:nth-child(1)").on('click',function(){header('h1');});
-  $("nav ul span li div div ul li:nth-child(2)").on('click',function(){header('h2');});
-  $("nav ul span li div div ul li:nth-child(3)").on('click',function(){header('h3');});
-  $("nav ul span li div div ul li:nth-child(4)").on('click',function(){header('h4');});
-  $("nav ul span li div div ul li:nth-child(5)").on('click',function(){header('h5');});
-  $("nav ul span li div div ul li:nth-child(6)").on('click',function(){header('h6');});
+  $("header ul span li div div ul li:nth-child(1)").on('click',function(){header('h1');});
+  $("header ul span li div div ul li:nth-child(2)").on('click',function(){header('h2');});
+  $("header ul span li div div ul li:nth-child(3)").on('click',function(){header('h3');});
+  $("header ul span li div div ul li:nth-child(4)").on('click',function(){header('h4');});
+  $("header ul span li div div ul li:nth-child(5)").on('click',function(){header('h5');});
+  $("header ul span li div div ul li:nth-child(6)").on('click',function(){header('h6');});
   $("#copy").on("click",copy);
   keydownEvent();
   refreshEvent();
