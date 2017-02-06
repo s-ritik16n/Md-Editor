@@ -13,12 +13,13 @@ $(document).ready(function(){
   $("#minus").on('click',hr);
   $("#quoteL").on('click',blockQstart);
   $("#fileImage").on('click',fileImage);
-  $("ul li:nth-child(1)").on('click',function(){header('h1');});
-  $("ul li:nth-child(2)").on('click',function(){header('h2');});
-  $("ul li:nth-child(3)").on('click',function(){header('h3');});
-  $("ul li:nth-child(4)").on('click',function(){header('h4');});
-  $("ul li:nth-child(5)").on('click',function(){header('h5');});
-  $("ul li:nth-child(6)").on('click',function(){header('h6');});
+  $("nav ul span li div div ul li:nth-child(1)").on('click',function(){header('h1');});
+  $("nav ul span li div div ul li:nth-child(2)").on('click',function(){header('h2');});
+  $("nav ul span li div div ul li:nth-child(3)").on('click',function(){header('h3');});
+  $("nav ul span li div div ul li:nth-child(4)").on('click',function(){header('h4');});
+  $("nav ul span li div div ul li:nth-child(5)").on('click',function(){header('h5');});
+  $("nav ul span li div div ul li:nth-child(6)").on('click',function(){header('h6');});
+  $("#copy").on("click",copy);
   keydownEvent();
   refreshEvent();
 });
@@ -128,17 +129,25 @@ function selection(endOffset,startOffset,midString){
   textArea.setSelectionRange(start,end);
 }
 
+function delSelection(){
+  if(window.getSelection().toString().length > 0){
+    window.getSelection().deleteFromDocument();
+  }
+}
+
 function bold(){
   var $textarea = $("textarea");
   $textarea.focus();
   selection(15,2,"**<strong text>**")
+  console.log();
 }
 
 function emphasis(){
-  var $textarea = $("#textarea");
-  $textarea.focus();
-  selection(2,1,"__")
-  window.getSelection().collapseToStart()
+    delSelection();
+    var $textarea = $("#textarea");
+    $textarea.focus();
+    selection(2,1,"__")
+    window.getSelection().collapseToStart()
 }
 
 function strikethrough(){
