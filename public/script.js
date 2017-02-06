@@ -3,7 +3,6 @@ $(document).ready(function(){
   initializeSessions();
   $("#bold").on('click',bold);
   $("#emphasis").on('click',emphasis);
-  $("#strikethrough").on('click',strikethrough);
   $("#table").on('click',table);
   $("#link").on('click',link);
   $("#listol").on('click',listol);
