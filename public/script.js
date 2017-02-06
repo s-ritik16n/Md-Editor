@@ -183,7 +183,6 @@ function bold(){
 }
 
 function emphasis(){
-    delSelection();
     var $textarea = $("#textarea");
     $textarea.focus();
     selection(2,1,"__")
