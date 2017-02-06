@@ -370,3 +370,23 @@ function fileImage(){
     //$textarea.val($textarea.val()+' [<alt_text>](<link> "<tooltip>")')
   }
 }
+
+function copy(){
+  var textarea = document.querySelector("#textarea");
+  textarea.focus();
+  textarea.setSelectionRange(0,textarea.value.length);
+  var succeed;
+  try {
+    if(textarea.value != ""){
+      succeed = document.execCommand("copy");
+      alert("text copied to clipboard");
+      textarea.setSelectionRange(textarea.value.length,textarea.value.length)
+    } else {
+      alert("document is empty");
+    }
+  } catch (e) {
+    alert("your browser does not support this action")
+  } finally {
+
+  }
+}
