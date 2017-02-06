@@ -280,6 +280,7 @@ function listol(){
   $textarea = $('#textarea');
   if(!$textarea.val()){
     $textarea.val($textarea.val()+"\n"+sessionStorage.getItem("listnum")+". ");
+    $textarea.focus();
   }else {
     $textarea.focus();
     selection(5,5,"\n\n"+sessionStorage.getItem("listnum")+". \n\n")
