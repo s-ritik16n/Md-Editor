@@ -78,12 +78,10 @@ function keydownEvent(){
           }
         }
         else if (sessionStorage.getItem("listol") == 1) {
-          //sessionStorage.enterPressed = Number(sessionStorage.enterPressed) + 1;
           if(sessionStorage.enterPressed == 1){
             e.preventDefault();
             sessionStorage.listnum = Number(sessionStorage.listnum) + 1;
             selection(4,4,"\n"+sessionStorage.getItem("listnum")+". ")
-            //$(this).val($(this).val()+);
           }else if (sessionStorage.enterPressed == 2) {
               stripOff(3);
               initializeSessions();
@@ -182,7 +180,6 @@ function createTable(arr){
     $textArea = $("#textarea");
     selection(4,0,"\n\n| ");
     window.getSelection().collapseToEnd();
-    //$textArea.val($textArea.val()+"| ")
     for (var i = 0; i < arr[0]; i++) {
       if(i != (arr[0]-1)){
         selection(14,0," column_head |");
@@ -191,9 +188,7 @@ function createTable(arr){
         selection(13,0," column_head\n");
         window.getSelection().collapseToEnd();
       }
-      //$textArea.val($textArea.val()+"column_head |")
     }
-    //    $textArea.val($textArea.val()+"\n")
     for (var i = 0; i < arr[0]; i++) {
       if(i != (arr[0]-1)){
         selection(5,0,"--- |");
@@ -202,10 +197,7 @@ function createTable(arr){
         selection(5,0,"--- \n");
         window.getSelection().collapseToEnd();
       }
-      //$textArea.val($textArea.val()+"--- |")
     }
-    //$textArea.val($textArea.val().substr(0,$textArea.val().length-2));
-    //$textArea.val($textArea.val()+"\n");
     for (var i = 0; i < arr[1]; i++) {
       for (var j = 0; j < arr[0]; j++) {
         if(j != (arr[0]-1)){
@@ -215,12 +207,9 @@ function createTable(arr){
           selection(3,0,"...");
           window.getSelection().collapseToEnd();
         }
-        //$textArea.val($textArea.val()+"data |")
       }
-      //$textArea.val($textArea.val().substr(0,$textArea.val().length-2));
       selection(1,0,"\n");
       window.getSelection().collapseToEnd();
-      //$textArea.val($textArea.val()+"\n");
     }
     selection(1,0,"\n");
     window.getSelection().collapseToEnd();
@@ -366,7 +355,6 @@ function fileImage(){
     selection(11,1,'[<alt_text>](<link> "<tooltip>")')
   } else {
     selection(12,2,' [<alt_text>](<link> "<tooltip>") ')
-    //$textarea.val($textarea.val()+' [<alt_text>](<link> "<tooltip>")')
   }
 }
 
@@ -384,7 +372,7 @@ function copy(){
       alert("document is empty");
     }
   } catch (e) {
-    alert("your browser does not support this action")
+    alert("action failed")
   } finally {
 
   }
